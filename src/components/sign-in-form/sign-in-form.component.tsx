@@ -33,7 +33,15 @@ const SignInForm = () => {
       const response = await signInAuthUserWithEmailAndPassword(email, password)
       console.log(response)
       resetFormFields()
-    } catch (error) {}
+    } catch (error: any) {
+      if (error.code === 'auth/wrong-password') {
+        alert('Incorrect password or email')
+      } else if (error.code === 'auth/user-not-found') {
+        alert('User not found')
+      } else {
+        console.log('Encountered an error while signing in the user')
+      }
+    }
   }
 
   const logGoogleUser = async () => {
@@ -66,7 +74,7 @@ const SignInForm = () => {
 
         <div className="buttons-container">
           <Button type="submit">Sign In</Button>
-          <Button clickHandler={logGoogleUser} dimension="google">
+          <Button type="button" clickHandler={logGoogleUser} dimension="google">
             Sign In with Google
           </Button>
         </div>
