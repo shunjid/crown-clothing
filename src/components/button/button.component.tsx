@@ -4,10 +4,12 @@ const Button = ({
   children,
   dimension,
   type,
+  clickHandler,
 }: {
   children: React.ReactNode
   dimension?: 'google' | 'inverted'
-  type: 'submit' | 'button' | 'reset'
+  type?: 'submit' | 'button' | 'reset'
+  clickHandler?: () => void
 }) => {
   const BUTTON_TYPE_CLASSES = {
     google: 'google-sign-in',
@@ -20,6 +22,7 @@ const Button = ({
       className={`button-container ${
         dimension ? BUTTON_TYPE_CLASSES[dimension] : ''
       }`}
+      onClick={clickHandler}
     >
       {children}
     </button>
