@@ -6,22 +6,19 @@ import {
 import FormInput from '../form-input/form-input.component'
 
 const SignUpForm = () => {
-  const [formFields, setFormFields] = useState({
+  const defaultFormField = {
     displayName: '',
     email: '',
     password: '',
     confirmPassword: '',
-  })
+  }
+
+  const [formFields, setFormFields] = useState(defaultFormField)
 
   const { displayName, email, password, confirmPassword } = formFields
 
   const resetFormFields = () => {
-    setFormFields({
-      displayName: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    })
+    setFormFields(defaultFormField)
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
