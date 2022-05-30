@@ -1,8 +1,8 @@
 import { createContext, useState } from 'react'
 import PRODUCT_DATA from '../shop-data.json'
-import { Product } from '../types'
+import { IProduct } from '../types'
 
-type Products = Array<Product>
+type Products = Array<IProduct>
 
 type ProductsContextType = {
   products: Products

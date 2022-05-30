@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react'
-import { ICartItem, Product } from '../types'
+import { ICartItem, IProduct } from '../types'
 
-const addCartItem = (cartItems: ICartItem[], productToAdd: Product) => {
+const addCartItem = (cartItems: ICartItem[], productToAdd: IProduct) => {
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.id === productToAdd.id
   )
@@ -27,7 +27,7 @@ type CartContextType = {
   isCartOpen: boolean
   setIsCartOpen: (isCartOpen: boolean) => void
   cartItems: ICartItem[]
-  addItemToCart: (productToAdd: Product) => void
+  addItemToCart: (productToAdd: IProduct) => void
   cartCount: number
 }
 
@@ -52,7 +52,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     setCartCount(newCartCount)
   }, [cartItems])
 
-  const addItemToCart = (productToAdd: Product) => {
+  const addItemToCart = (productToAdd: IProduct) => {
     setCartItems(addCartItem(cartItems, productToAdd))
   }
 
