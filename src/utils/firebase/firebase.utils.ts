@@ -10,7 +10,14 @@ import {
   signOut,
   User,
 } from 'firebase/auth'
-import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDoc,
+  getFirestore,
+  setDoc,
+  writeBatch,
+} from 'firebase/firestore'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -33,6 +40,22 @@ googleProvider.setCustomParameters({
 export const auth = getAuth()
 export const signInWithGooglePopUp = () => signInWithPopup(auth, googleProvider)
 export const db = getFirestore()
+
+export const addCollectionAndDocuments = async (
+  collectionKey: string,
+  objectsToAdd: any,
+  field: string
+) => {
+  const collectionRef = collection(db, collectionKey)
+  const batch = writeBatch(db)
+
+  objectsToAdd.forEach((obj: any) => {
+    const newDocRef = doc(collectionRef, obj[field].toLowerCase())
+    batch.set(newDocRef, obj)
+  })
+
+  await batch.commit()
+}
 
 export const createUserDocumentFromAuth = async (
   userAuth: User,

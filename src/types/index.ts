@@ -6,3 +6,8 @@ export type IProduct = {
 }
 
 export type ICartItem = IProduct & { quantity: number }
+
+export type IProductCategory = {
+  title: string
+  items: IProduct[]
+}
