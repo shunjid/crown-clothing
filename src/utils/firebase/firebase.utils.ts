@@ -14,10 +14,13 @@ import {
   collection,
   doc,
   getDoc,
+  getDocs,
   getFirestore,
+  query,
   setDoc,
   writeBatch,
 } from 'firebase/firestore'
+import { ICategoryToProductsMap } from '../../types'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -55,6 +58,18 @@ export const addCollectionAndDocuments = async (
   })
 
   await batch.commit()
+}
+
+export const getProductsByCategories = async () => {
+  const collectionRef = collection(db, 'categories')
+  const queryToRun = query(collectionRef)
+  const querySnapshot = await getDocs(queryToRun)
+
+  return querySnapshot.docs.reduce((acc, document) => {
+    const { title, items } = document.data()
+    acc[title.toLowerCase()] = items
+    return acc
+  }, {} as ICategoryToProductsMap)
 }
 
 export const createUserDocumentFromAuth = async (

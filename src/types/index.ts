@@ -11,3 +11,5 @@ export type IProductCategory = {
   title: string
   items: IProduct[]
 }
+
+export type ICategoryToProductsMap = Record<string, IProduct[]>
