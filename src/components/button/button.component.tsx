@@ -1,31 +1,35 @@
-import './button.styles.scss'
+import { BaseButton, GoogleSignInButton, InvertedButton } from './button.styles'
+
+export const BUTTON_TYPE_CLASSES = {
+  base: 'base',
+  google: 'google-sign-in',
+  inverted: 'inverted',
+}
+
+const getButton = (buttonDimension: string = BUTTON_TYPE_CLASSES.base) =>
+  ({
+    [BUTTON_TYPE_CLASSES.base]: BaseButton,
+    [BUTTON_TYPE_CLASSES.google]: GoogleSignInButton,
+    [BUTTON_TYPE_CLASSES.inverted]: InvertedButton,
+  }[buttonDimension])
 
 const Button = ({
   children,
-  dimension,
   type,
   clickHandler,
+  dimension = BUTTON_TYPE_CLASSES.base,
 }: {
   children: React.ReactNode
-  dimension?: 'google' | 'inverted'
+  dimension?: string
   type?: 'submit' | 'button' | 'reset'
   clickHandler?: () => void
 }) => {
-  const BUTTON_TYPE_CLASSES = {
-    google: 'google-sign-in',
-    inverted: 'inverted',
-  }
+  const CustomButton = getButton(dimension)
 
   return (
-    <button
-      type={type}
-      className={`button-container ${
-        dimension ? BUTTON_TYPE_CLASSES[dimension] : ''
-      }`}
-      onClick={clickHandler}
-    >
+    <CustomButton type={type} onClick={clickHandler}>
       {children}
-    </button>
+    </CustomButton>
   )
 }
 
