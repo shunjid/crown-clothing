@@ -3,3 +3,7 @@ export type ICategoryItem = {
   title: string
   imageUrl: string
 }
+
+export type IDirectory = ICategoryItem & {
+  route: string
+}
