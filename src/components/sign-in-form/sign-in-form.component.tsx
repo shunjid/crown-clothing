@@ -5,7 +5,7 @@ import {
 } from '../../utils/firebase/firebase.utils'
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component'
 import FormInput from '../form-input/form-input.component'
-import './sign-in-form.styles.scss'
+import { SignInFormContainer } from './sign-in-form.styles'
 
 const SignInForm = () => {
   const defaultFormField = {
@@ -48,7 +48,7 @@ const SignInForm = () => {
   }
 
   return (
-    <div className="sign-in-form-container">
+    <SignInFormContainer>
       <h2>I already have an account</h2>
       <span>Sign in with you email and password</span>
       <form onSubmit={handleSubmit}>
@@ -81,7 +81,7 @@ const SignInForm = () => {
           </Button>
         </div>
       </form>
-    </div>
+    </SignInFormContainer>
   )
 }
 
