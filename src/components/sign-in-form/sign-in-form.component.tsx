@@ -3,7 +3,8 @@ import {
   signInAuthUserWithEmailAndPassword,
   signInWithGooglePopUp,
 } from '../../utils/firebase/firebase.utils'
-import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component'
+import Button from '../button/button.component'
+import { BUTTON_DIMENSIONS } from '../button/constants'
 import FormInput from '../form-input/form-input.component'
 import { SignInFormContainer } from './sign-in-form.styles'
 
@@ -75,7 +76,7 @@ const SignInForm = () => {
           <Button
             type="button"
             clickHandler={logGoogleUser}
-            dimension={BUTTON_TYPE_CLASSES.google}
+            dimension={BUTTON_DIMENSIONS.GOOGLE}
           >
             Sign In with Google
           </Button>

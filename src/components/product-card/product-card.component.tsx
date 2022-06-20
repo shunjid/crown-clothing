@@ -1,7 +1,8 @@
 import { useContext } from 'react'
 import { CartContext } from '../../contexts/cart.context'
 import { IProduct } from '../../types'
-import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component'
+import Button from '../button/button.component'
+import { BUTTON_DIMENSIONS } from '../button/constants'
 import {
   ProductCardContainer,
   ProductCardFooter,
@@ -21,7 +22,7 @@ const ProductCard = ({ id, name, price, imageUrl }: IProduct) => {
         <ProductCardFooterPrice>{price}</ProductCardFooterPrice>
       </ProductCardFooter>
       <Button
-        dimension={BUTTON_TYPE_CLASSES.inverted}
+        dimension={BUTTON_DIMENSIONS.INVERTED}
         clickHandler={addProductToCart}
       >
         Add to Cart
