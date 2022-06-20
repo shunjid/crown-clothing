@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from 'react'
-import { ICategoryToProductsMap } from '../types'
+import { TCategoryToProductsMap } from '../types'
 import { getProductsByCategories } from '../utils/firebase/firebase.utils'
 
 type CategoriesContextType = {
-  categoriesMap: ICategoryToProductsMap
+  categoriesMap: TCategoryToProductsMap
 }
 
 export const CategoriesContext = createContext<CategoriesContextType>({
@@ -15,7 +15,7 @@ export const CategoriesProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [categoriesMap, setCategoriesMap] = useState<ICategoryToProductsMap>({})
+  const [categoriesMap, setCategoriesMap] = useState<TCategoryToProductsMap>({})
 
   useEffect(() => {
     const getCategories = async () => {
