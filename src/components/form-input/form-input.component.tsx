@@ -3,6 +3,7 @@ import {
   FormInputLabel,
   FormInputStyles,
 } from './form-input.styles'
+import { IFormInputProperties } from './types'
 
 const FormInput = ({
   label,
@@ -11,14 +12,7 @@ const FormInput = ({
   changeHandler,
   name,
   value,
-}: {
-  label?: string
-  type: string
-  required: boolean
-  changeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void
-  name: string
-  value: string
-}) => {
+}: IFormInputProperties) => {
   return (
     <FormGroupStyles>
       <FormInputStyles
