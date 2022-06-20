@@ -1,6 +1,13 @@
-import { createContext, Reducer, useReducer } from 'react'
+import { createContext, useReducer } from 'react'
 import { ICartItem, IProduct } from '../types'
 import { createReducerAction } from '../utils/helpers/reducer.helper'
+import {
+  ICartContextType,
+  ICartReducerAction,
+  ICartReducerState,
+  TCartReducer,
+  TCartReducerCollectivePayload,
+} from './types'
 
 const addCartItem = (cartItems: ICartItem[], productToAdd: IProduct) => {
   const existingCartItem = cartItems.find(
@@ -45,18 +52,7 @@ const removeCartItem = (cartItems: ICartItem[], productToRemove: IProduct) => {
 const clearCartItem = (cartItems: ICartItem[], cartItemToClear: ICartItem) =>
   cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id)
 
-type CartContextType = {
-  isCartOpen: boolean
-  setIsCartOpen: (isCartOpen: boolean) => void
-  cartItems: ICartItem[]
-  addItemToCart: (productToAdd: IProduct) => void
-  removeItemFromCart: (productToRemove: IProduct) => void
-  clearItemFromCart: (cartItemToRemove: ICartItem) => void
-  cartCount: number
-  cartTotal: number
-}
-
-export const CartContext = createContext<CartContextType>({
+export const CartContext = createContext<ICartContextType>({
   isCartOpen: false,
   setIsCartOpen: () => {},
   cartItems: [],
@@ -72,40 +68,21 @@ const CART_ACTION_TYPES = {
   TOGGLE_CART: 'TOGGLE_CART',
 }
 
-type CartReducerState = {
-  isCartOpen: boolean
-  cartItems: ICartItem[]
-  cartCount: number
-  cartTotal: number
-}
-
-type CartReducerCollectivePayload = Omit<
-  Partial<CartReducerState>,
-  'isCartOpen'
->
-
-type CartReducerAction = {
-  type: string
-  payload: CartReducerCollectivePayload | boolean
-}
-
-type CartReducer = Reducer<CartReducerState, CartReducerAction>
-
-const INITIAL_STATE: CartReducerState = {
+const INITIAL_STATE: ICartReducerState = {
   isCartOpen: false,
   cartItems: [],
   cartCount: 0,
   cartTotal: 0,
 }
 
-const cartReducer = (state: CartReducerState, action: CartReducerAction) => {
+const cartReducer = (state: ICartReducerState, action: ICartReducerAction) => {
   const { type, payload } = action
 
   switch (type) {
     case CART_ACTION_TYPES.SET_CART_ITEMS:
       return {
         ...state,
-        ...(payload as CartReducerCollectivePayload),
+        ...(payload as TCartReducerCollectivePayload),
       }
     case CART_ACTION_TYPES.TOGGLE_CART:
       return {
@@ -119,7 +96,7 @@ const cartReducer = (state: CartReducerState, action: CartReducerAction) => {
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [{ isCartOpen, cartItems, cartCount, cartTotal }, dispatchCart] =
-    useReducer<CartReducer>(cartReducer, INITIAL_STATE)
+    useReducer<TCartReducer>(cartReducer, INITIAL_STATE)
 
   const updateCartItemReducer = (newCartItems: ICartItem[]) => {
     const newCartCount = newCartItems.reduce(
@@ -171,7 +148,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     removeItemFromCart,
     clearItemFromCart,
     cartTotal,
-  } as CartContextType
+  } as ICartContextType
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }
