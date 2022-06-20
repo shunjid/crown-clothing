@@ -1,8 +1,8 @@
-type ButtonTypes = 'submit' | 'button' | 'reset'
+type TButtonTypes = 'submit' | 'button' | 'reset'
 
 export interface IButtonProperties {
   children: React.ReactNode
   dimension?: string
-  type?: ButtonTypes
+  type?: TButtonTypes
   clickHandler?: () => void
 }
