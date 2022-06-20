@@ -1,9 +1,9 @@
-export type ICategoryItem = {
+export interface ICategoryItem {
   id: number
   title: string
   imageUrl: string
 }
 
-export type IDirectory = ICategoryItem & {
+export interface IDirectory extends ICategoryItem {
   route: string
 }
