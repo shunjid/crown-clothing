@@ -1,12 +1,9 @@
 import { createContext, useEffect, useState } from 'react'
 import { TCategoryToProductsMap } from '../types'
 import { getProductsByCategories } from '../utils/firebase/firebase.utils'
+import { ICategoriesContextType } from './types'
 
-type CategoriesContextType = {
-  categoriesMap: TCategoryToProductsMap
-}
-
-export const CategoriesContext = createContext<CategoriesContextType>({
+export const CategoriesContext = createContext<ICategoriesContextType>({
   categoriesMap: {},
 })
 
