@@ -1,6 +1,6 @@
 import { User } from 'firebase/auth'
 import { Reducer } from 'react'
-import { ICartItem, IProduct } from '../types'
+import { ICartItem, IProduct, TCategoryToProductsMap } from '../types'
 
 // Cart Context Definitions
 export interface ICartContextType {
@@ -47,3 +47,8 @@ export interface IUserReducerAction {
 }
 
 export type TUserReducer = Reducer<TUserReducerState, IUserReducerAction>
+
+// Categories Context Definitions
+export interface ICategoriesContextType {
+  categoriesMap: TCategoryToProductsMap
+}
