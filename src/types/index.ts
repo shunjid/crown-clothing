@@ -1,15 +1,17 @@
-export type IProduct = {
+export interface IProduct {
   id: number
   name: string
   imageUrl: string
   price: number
 }
 
-export type ICartItem = IProduct & { quantity: number }
+export interface ICartItem extends IProduct {
+  quantity: number
+}
 
-export type IProductCategory = {
+export interface IProductCategory {
   title: string
   items: IProduct[]
 }
 
-export type ICategoryToProductsMap = Record<string, IProduct[]>
+export type TCategoryToProductsMap = Record<string, IProduct[]>

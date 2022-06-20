@@ -20,7 +20,7 @@ import {
   setDoc,
   writeBatch,
 } from 'firebase/firestore'
-import { ICategoryToProductsMap } from '../../types'
+import { TCategoryToProductsMap } from '../../types'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -69,7 +69,7 @@ export const getProductsByCategories = async () => {
     const { title, items } = document.data()
     acc[title.toLowerCase()] = items
     return acc
-  }, {} as ICategoryToProductsMap)
+  }, {} as TCategoryToProductsMap)
 }
 
 export const createUserDocumentFromAuth = async (
