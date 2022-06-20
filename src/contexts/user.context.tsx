@@ -1,17 +1,18 @@
 import { User } from 'firebase/auth'
-import { createContext, Reducer, useEffect, useReducer } from 'react'
+import { createContext, useEffect, useReducer } from 'react'
 import {
   createUserDocumentFromAuth,
   onAuthStateChangedListener,
 } from '../utils/firebase/firebase.utils'
 import { createReducerAction } from '../utils/helpers/reducer.helper'
+import {
+  IUserContextType,
+  IUserReducerAction,
+  TUserReducer,
+  TUserReducerState,
+} from './types'
 
-type UserContextType = {
-  currentUser: User | null
-  setCurrentUser: (user?: User | null) => void
-}
-
-export const UserContext = createContext<UserContextType>({
+export const UserContext = createContext<IUserContextType>({
   currentUser: null,
   setCurrentUser: () => {},
 })
@@ -20,18 +21,11 @@ export const USER_ACTION_TYPES = {
   SET_CURRENT_USER: 'SET_CURRENT_USER',
 }
 
-type UserReducerState = Pick<UserContextType, 'currentUser'>
-type UserReducerAction = {
-  type: string
-  payload: User | null
-}
-type UserReducer = Reducer<UserReducerState, UserReducerAction>
-
-const INITIAL_STATE: UserReducerState = {
+const INITIAL_STATE: TUserReducerState = {
   currentUser: null,
 }
 
-const userReducer = (state: UserReducerState, action: UserReducerAction) => {
+const userReducer = (state: TUserReducerState, action: IUserReducerAction) => {
   const { type, payload } = action
 
   switch (type) {
@@ -46,7 +40,7 @@ const userReducer = (state: UserReducerState, action: UserReducerAction) => {
 }
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [{ currentUser }, userDispatcher] = useReducer<UserReducer>(
+  const [{ currentUser }, userDispatcher] = useReducer<TUserReducer>(
     userReducer,
     INITIAL_STATE
   )
@@ -57,7 +51,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     )
   }
 
-  const value = { currentUser, setCurrentUser } as UserContextType
+  const value = { currentUser, setCurrentUser } as IUserContextType
 
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener((user) => {
