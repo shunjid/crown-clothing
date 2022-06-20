@@ -1,6 +1,8 @@
+import { User } from 'firebase/auth'
 import { Reducer } from 'react'
 import { ICartItem, IProduct } from '../types'
 
+// Cart Context Definitions
 export interface ICartContextType {
   isCartOpen: boolean
   setIsCartOpen: (isCartOpen: boolean) => void
@@ -30,3 +32,18 @@ export interface ICartReducerAction {
 }
 
 export type TCartReducer = Reducer<ICartReducerState, ICartReducerAction>
+
+// User Context Definitions
+export interface IUserContextType {
+  currentUser: User | null
+  setCurrentUser: (user?: User | null) => void
+}
+
+export type TUserReducerState = Pick<IUserContextType, 'currentUser'>
+
+export interface IUserReducerAction {
+  type: string
+  payload: User | null
+}
+
+export type TUserReducer = Reducer<TUserReducerState, IUserReducerAction>
