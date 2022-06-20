@@ -1,5 +1,5 @@
 import { User } from 'firebase/auth'
-import { createContext, useEffect, useState } from 'react'
+import { createContext, Reducer, useEffect, useReducer } from 'react'
 import {
   createUserDocumentFromAuth,
   onAuthStateChangedListener,
@@ -15,8 +15,45 @@ export const UserContext = createContext<UserContextType>({
   setCurrentUser: () => {},
 })
 
+export const USER_ACTION_TYPES = {
+  SET_CURRENT_USER: 'SET_CURRENT_USER',
+}
+
+type UserReducerState = Pick<UserContextType, 'currentUser'>
+type UserReducerAction = {
+  type: string
+  payload: User | null
+}
+type UserReducer = Reducer<UserReducerState, UserReducerAction>
+
+const INITIAL_STATE: UserReducerState = {
+  currentUser: null,
+}
+
+const userReducer = (state: UserReducerState, action: UserReducerAction) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case USER_ACTION_TYPES.SET_CURRENT_USER:
+      return {
+        ...state,
+        currentUser: payload,
+      }
+    default:
+      throw new Error('Unhandled action type in userReducer')
+  }
+}
+
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null)
+  const [{ currentUser }, userDispatcher] = useReducer<UserReducer>(
+    userReducer,
+    INITIAL_STATE
+  )
+
+  const setCurrentUser = (user: User | null) => {
+    userDispatcher({ type: USER_ACTION_TYPES.SET_CURRENT_USER, payload: user })
+  }
+
   const value = { currentUser, setCurrentUser } as UserContextType
 
   useEffect(() => {
