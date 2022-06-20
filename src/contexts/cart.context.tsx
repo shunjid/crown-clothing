@@ -1,5 +1,6 @@
 import { createContext, Reducer, useReducer } from 'react'
 import { ICartItem, IProduct } from '../types'
+import { createReducerAction } from '../utils/helpers/reducer.helper'
 
 const addCartItem = (cartItems: ICartItem[], productToAdd: IProduct) => {
   const existingCartItem = cartItems.find(
@@ -131,21 +132,19 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       0
     )
 
-    dispatchCart({
-      type: CART_ACTION_TYPES.SET_CART_ITEMS,
-      payload: {
+    dispatchCart(
+      createReducerAction(CART_ACTION_TYPES.SET_CART_ITEMS, {
         cartItems: newCartItems,
         cartCount: newCartCount,
         cartTotal: newCartTotal,
-      },
-    })
+      })
+    )
   }
 
   const setIsCartOpen = (toggleValue: boolean) => {
-    dispatchCart({
-      type: CART_ACTION_TYPES.TOGGLE_CART,
-      payload: toggleValue,
-    })
+    dispatchCart(
+      createReducerAction(CART_ACTION_TYPES.TOGGLE_CART, toggleValue)
+    )
   }
 
   const addItemToCart = (productToAdd: IProduct) => {
